@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+import uuid
+from werkzeug.security import generate_password_hash, check_password_hash
 
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -28,6 +30,33 @@ class Todo(db.Model):
     text = db.Column(db.String(50))
     complete = db.Column(db.Boolean)
     user_id = db.Column(db.Integer)
+
+
+# Routes
+
+@app.route('/user', methods=['GET'])
+def getAllUsers():
+    return ''
+
+
+@app.route('/user/<user_id>', methods=['GET'])
+def getOneUser(user_id):
+    return ''
+
+
+@app.route('/user', methods=['POST'])
+def createUser():
+    return ''
+
+
+@app.route('/user/<user_id>', methods=['PUT'])
+def promoteUser():
+    return ''
+
+
+@app.route('/user/<user_id>', methods=['DELETE'])
+def deleteUser():
+    return ''
 
 
 if __name__ == '__main__':
