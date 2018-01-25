@@ -46,7 +46,17 @@ def getOneUser(user_id):
 
 @app.route('/user', methods=['POST'])
 def createUser():
-    return ''
+    data = request.get_json()
+    hashedPassword = generate_password_hash(data['password'], method='sha256')
+
+    new_user = User(public_id=str(uuid.uuid4()), name=data['name'], email=data['email'], password=hashedPassword, admin=False)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({
+                     'status': 'ok',
+                     'message': 'new user created successfully'
+                   })
 
 
 @app.route('/user/<user_id>', methods=['PUT'])
