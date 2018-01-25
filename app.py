@@ -52,7 +52,21 @@ def getAllUsers():
 
 @app.route('/user/<user_id>', methods=['GET'])
 def getOneUser(user_id):
-    return ''
+    user = User.query.filter_by(public_id=user_id).first()
+
+    if not user:
+        return jsonify({
+                         'status': 'error',
+                         'message': 'no user found'
+                       })
+    user_data = {}
+    user_data['public_id'] = user.public_id
+    user_data['name'] = user.name
+    user_data['email'] = user.email
+    user_data['password'] = user.password
+    user_data['admin'] = user.admin
+
+    return jsonify({'user': user_data})
 
 
 @app.route('/user', methods=['POST'])
