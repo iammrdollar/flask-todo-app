@@ -85,13 +85,40 @@ def createUser():
 
 
 @app.route('/user/<user_id>', methods=['PUT'])
-def promoteUser():
-    return ''
+def promoteUser(user_id):
+    user = User.query.filter_by(public_id=user_id).first()
+
+    if not user:
+        return jsonify({
+                         'status': 'error',
+                         'message': 'no user found'
+                       })
+    user.admin = True
+    db.session.commit()
+
+    return jsonify({
+                        "status": "ok",
+                        "message": "the user has been updated"
+                    })
 
 
 @app.route('/user/<user_id>', methods=['DELETE'])
-def deleteUser():
-    return ''
+def deleteUser(user_id):
+    user = User.query.filter_by(public_id=user_id).first()
+
+    if not user:
+        return jsonify({
+                         'status': 'error',
+                         'message': 'no user found'
+                       })
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({
+                        "status": "ok",
+                        "message": "the user has been deleted"
+                    })
 
 
 if __name__ == '__main__':
