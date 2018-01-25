@@ -105,3 +105,6 @@ venv.bak/
 
 # sqlite db
 *.sqlite
+
+# VIM
+*.swp
